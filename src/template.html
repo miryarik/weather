@@ -13,14 +13,37 @@
                 <button type="submit">Search</button>
             </form>
             <div class="main card">
-                <p class="temp">56</p>
-                <img alt="weather-icon" src="https://cdn.iconscout.com/icon/free/png-512/free-cloud-rain-icon-download-in-svg-png-gif-file-formats--rainny-forecast-weather-pack-nature-icons-3219522.png?f=webp&w=256" class="icon">
-                <p class="prec-prob">76%</p>
+                <p class="temp"></p>
+                <div class="prec-info">
+                    <img alt="weather-icon" src="https://cdn.iconscout.com/icon/free/png-512/free-cloud-rain-icon-download-in-svg-png-gif-file-formats--rainny-forecast-weather-pack-nature-icons-3219522.png?f=webp&w=256" class="icon">
+                    <p class="prec-prob"></p>
+                </div>
             </div>
         </div>
 
         <div class="section info">
-            <p>metadata here</p>
+            <table>
+                <tr>
+                    <th>Feels like</th>
+                    <td id="feels-like"></td>
+                </tr>
+                <tr>
+                    <th>UV Index</th>
+                    <td id="uv-index"></td>
+                </tr>
+                <tr>
+                    <th>Wind</th>
+                    <td id="wind"></td>
+                </tr>
+                <tr>
+                    <th>Visibility</th>
+                    <td id="visibility"></td>
+                </tr>
+                <tr>
+                    <th>Humidity</th>
+                    <td id="humidity"></td>
+                </tr>
+            </table>
         </div>
 
         <div class="section desc">

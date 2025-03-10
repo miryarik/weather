@@ -1,33 +1,63 @@
+@font-face {
+    font-family: 'allerbold';
+    src: url('./fonts/aller_bd-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'allerregular';
+    src: url('./fonts/aller_rg-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
-    --major-gap: 26px;
-    --minor-gap: 14px;
+    --major-gap: 36px;
+    --minor-gap: 24px;
     --major-radius: 18px;
+    --test-color: rgb(192, 192, 192);
+    --test-bg: rgb(224, 224, 224);
+
+
 }
 
 body {
+    
+    font-family: allerregular;
     width: 100vw;
     height: 100vh;
-    background-color: rgb(126, 126, 126);
-
+    background-color: var(--test-bg);
+    
     .container {
         width: 100%;
         height: 100%;
         padding: var(--major-gap);
-
+        
         display: grid;
         grid-template: 2fr 1fr / 1fr 1fr;
         justify-items: center;
         align-items: center;
         gap: var(--major-gap);
-
-        .section.main {
+        
+        .section {
             height: 100%;
             width: 100%;
-            /* padding: var(--major-gap); */
+            padding: var(--major-gap);
+            background-color: var(--test-color);
+            border-radius: var(--major-radius);
+        }
+        
+        .section.main {
+            padding: 0;
+            background-color: var(--test-bg);
 
             display: flex;
             flex-direction: column;
             gap: var(--minor-gap);
+
+            border: none;
             
             form {
                 width: 100%;
@@ -45,36 +75,58 @@ body {
             .card.main {
                 height: 100%;
                 width: 100%;
+                padding: var(--major-gap);
 
-                background-color: rgb(184, 184, 184);
+                background-color: var(--test-color);
 
                 display: grid;
-                grid-template: 1fr 1fr / 3fr 2fr;
+                grid-template-columns: 3fr 2fr;
                 justify-items: center;
                 align-items: center;
-                grid-template-areas:
-                    "temp icon"
-                    "temp prob"
-                ;
+                gap: var(--minor-gap);
 
-                border: 2px solid black;
                 border-radius: var(--major-radius);
 
                 p.temp {
-                    grid-area: temp;
-                    font-size: 200px;
+                    font-size: 10rem;
                 }
 
-                img {
-                    grid-area: icon;
-                }
+                .prec-info {
+                
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    gap: var(--minor-gap);             
 
-                p.prec-prob {
-                    grid-area: prob;
-                    font-size: 80px;
+                    p.prec-prob {
+                        font-size: 5rem;
+                    }
+
                 }
                 
             }
         }
+
+        .section.desc {
+            font-size: 2rem;
+            text-align: center;
+            text-wrap: wrap;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section.info {
+            font-size: 2rem;
+            text-align: center;
+            text-wrap: wrap;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
     }
 }
