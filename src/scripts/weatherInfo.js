@@ -6,8 +6,7 @@ async function getWeatherData(location) {
         { mode: "cors" }
     );
     const data = await response.json();
-    console.log(data);
-    
+
     return data;
 }
 
@@ -16,25 +15,30 @@ async function getWeatherInfo(location) {
     const data = await getWeatherData(location);
 
     const weatherInfo = {
-        "location" : data.resolvedAddress,
-        "description": data.description,
-        "current" :  {
-            "condition" : data.currentConditions.conditions,
-            "icon": data.currentConditions.icon,
-            "temperature": data.currentConditions.temp,
-            "precipprob": data.currentConditions.precipprob,
-            "feelslike": data.currentConditions.feelslike,
-            "uvindex": data.currentConditions.uvindex,
-            "windspeed": data.currentConditions.windspeed,
-            "winddir": data.currentConditions.winddir,
-            "visibility": data.currentConditions.visibility,
-            "humidity": data.currentConditions.humidity,
-        }
-    }
+        location: data.resolvedAddress,
+        description: data.description,
+        current: {
+            condition: data.currentConditions.conditions,
+            icon: data.currentConditions.icon,
+            temperature: data.currentConditions.temp,
+            precipprob: data.currentConditions.precipprob,
+            feelslike: data.currentConditions.feelslike,
+            uvindex: data.currentConditions.uvindex,
+            windspeed: data.currentConditions.windspeed,
+            winddir: data.currentConditions.winddir,
+            visibility: data.currentConditions.visibility,
+            humidity: data.currentConditions.humidity,
+        },
+        week: data.days.slice(1, 7).map((day) => {
+            return {
+                icon: day.icon,
+                temperature: day.temp,
+            };
+        }),
+    };
 
     return weatherInfo;
 }
-
 
 export async function loadInfo(location) {
     const info = await getWeatherInfo(location);
@@ -44,11 +48,15 @@ export async function loadInfo(location) {
     const mainTemp = document.querySelector(".main.card p.temp");
     const precProb = document.querySelector(".main.card p.prec-prob");
     const mainIcon = document.querySelector(".main.card img");
-    
+
     locInput.value = info.location;
     mainTemp.innerText = info.current.temperature;
     precProb.innerText = info.current.precipprob + "%";
-    mainIcon.alt = info.current.icon;
+    import(`../images/${info.current.icon}.svg`)
+        .then((module) => {
+            mainIcon.src = module.default;
+        })
+        .catch((err) => console.error("Icon load failed"));
 
     // desc
     const descP = document.querySelector(".desc p");
@@ -67,4 +75,20 @@ export async function loadInfo(location) {
     visibility.innerText = info.current.visibility;
     humidity.innerText = info.current.humidity;
 
+    // week > for each day => date, icon, temp
+    const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const today = new Date().getDay();
+    const week = document.querySelectorAll(".section.week > div");
+
+    for (let i = 0; i < week.length; i++) {
+        week[i].querySelector("p.day").innerText = days[(today + i) % 7];
+
+        import(`../images/${info.week[i].icon}.svg`)
+            .then((module) => {
+                week[i].querySelector("img").src = module.default;
+            })
+            .catch((err) => console.error("Icon load failed"));
+
+        week[i].querySelector("p.temp").innerText = info.week[i].temperature;
+    }
 }
