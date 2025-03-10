@@ -5,15 +5,16 @@ const API_KEY = "7KKXH6MLCCV3XZGMGVHSL6NUR";
 
 let location = "srinagar, kashmir";
 
-async function getWeatherInfo(location) {
+async function getWeatherData(location) {
     const response = await fetch(
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=${API_KEY}&contentType=json`,
         { mode: "cors" }
     );
     const data = await response.json();
+    return data;
+}
 
-    // console.log(data)
-
+function processWeatherData(data) {
     const weatherInfo = {
         "location" : data.resolvedAddress,
         "description": data.description,
@@ -37,6 +38,15 @@ async function getWeatherInfo(location) {
     return weatherInfo;
 }
 
-const info = await getWeatherInfo(location);
-console.log(info);
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const data = await getWeatherData(location);
+    const info = processWeatherData(data);
+
+    const mainTemp = document.querySelector(".main.card p.temp");
+    mainTemp.innerText = info.current.temperature
+
+})
+
+
 
