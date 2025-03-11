@@ -18,4 +18,5 @@ A minimal weather info app. This project demonstrates the use of **APIs, Promise
 - npm
 - HTML & CSS
 
-
+## Icons credit
+- Meteocons (https://github.com/basmilius/weather-icons)
