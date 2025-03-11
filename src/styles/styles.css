@@ -17,8 +17,6 @@
     --major-gap: 36px;
     --minor-gap: 24px;
     --major-radius: 18px;
-    --test-color: rgb(192, 192, 192);
-    --test-bg: rgb(224, 224, 224);
 }
 
 body {
@@ -26,7 +24,6 @@ body {
     font-family: allerregular;
     width: 100vw;
     height: 100vh;
-    background-color: var(--test-bg);
 
     .container {
         width: 100%;
@@ -42,14 +39,13 @@ body {
         .section {
             height: 100%;
             width: 100%;
+            min-width: 610px;
             padding: var(--major-gap);
-            background-color: var(--test-color);
             border-radius: var(--major-radius);
         }
 
         .section.main {
             padding: 0;
-            background-color: var(--test-bg);
 
             display: flex;
             flex-direction: column;
@@ -75,8 +71,6 @@ body {
                 width: 100%;
                 padding: var(--major-gap);
 
-                background-color: var(--test-color);
-
                 display: grid;
                 grid-template-columns: 3fr 2fr;
                 justify-items: center;
@@ -87,18 +81,31 @@ body {
 
                 p.temp {
                     font-size: 10rem;
+                    display: flex;
+                    flex-direction: column;
+
+                    span {
+                        font-size: 3rem;
+                        justify-self: center;
+                        align-self: center;
+                    }
                 }
 
                 .prec-info {
+                    width: 100%;
 
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
-                    
+
+                    img {
+                        width: 100%;
+                        height: auto;
+                    }
 
                     p.prec-prob {
-                        font-size: 5rem;
+                        font-size: 4rem;
                     }
 
                 }
@@ -133,7 +140,7 @@ body {
                 th {
                     text-align: right;
                 }
-    
+
                 td {
                     text-align: left;
                 }
@@ -147,11 +154,14 @@ body {
             align-items: center;
             gap: var(--minor-gap);
 
-            & > div {
+            &>div {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+
+                font-weight: bold;
+                height: 100%;
 
                 img {
                     height: 50%;
@@ -161,4 +171,5 @@ body {
         }
 
     }
+
 }

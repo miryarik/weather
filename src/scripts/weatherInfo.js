@@ -2,7 +2,7 @@ const API_KEY = "7KKXH6MLCCV3XZGMGVHSL6NUR";
 
 async function getWeatherData(location) {
     const response = await fetch(
-        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=${API_KEY}&contentType=json`,
+        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=${API_KEY}&contentType=json`,
         { mode: "cors" }
     );
     const data = await response.json();
@@ -41,7 +41,9 @@ async function getWeatherInfo(location) {
 }
 
 export async function loadInfo(location) {
+    spinner(true);
     const info = await getWeatherInfo(location);
+    spinner(false);
 
     // main > location, temp, icon, precip-prob
     const locInput = document.querySelector("input");
@@ -50,8 +52,13 @@ export async function loadInfo(location) {
     const mainIcon = document.querySelector(".main.card img");
 
     locInput.value = info.location;
-    mainTemp.innerText = info.current.temperature;
     precProb.innerText = info.current.precipprob + "%";
+
+    mainTemp.innerText = info.current.temperature;
+    const span = document.createElement("span");
+    span.innerText = "Celsius";
+    mainTemp.appendChild(span);
+
     import(`../images/${info.current.icon}.svg`)
         .then((module) => {
             mainIcon.src = module.default;
@@ -65,15 +72,17 @@ export async function loadInfo(location) {
     // info > feels like, uv index, wind, visibility, humidity
     const feelsLike = document.getElementById("feels-like");
     const uvIndex = document.getElementById("uv-index");
-    const wind = document.getElementById("wind");
+    const windSpeed = document.getElementById("windspeed");
+    const windDir = document.getElementById("winddir");
     const visibility = document.getElementById("visibility");
     const humidity = document.getElementById("humidity");
 
-    feelsLike.innerText = info.current.feelslike;
+    feelsLike.innerText = `${info.current.feelslike}\xB0 C`;
     uvIndex.innerText = info.current.uvindex;
-    wind.innerText = `${info.current.windspeed}kmph, ${info.current.winddir}\xB0`;
-    visibility.innerText = info.current.visibility;
-    humidity.innerText = info.current.humidity;
+    windSpeed.innerText = `${info.current.windspeed} kmph`;
+    windDir.innerText = `${info.current.winddir}\xB0`;
+    visibility.innerText = `${info.current.visibility} km`;
+    humidity.innerText = `${info.current.humidity}%`;
 
     // week > for each day => date, icon, temp
     const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -90,5 +99,13 @@ export async function loadInfo(location) {
             .catch((err) => console.error("Icon load failed"));
 
         week[i].querySelector("p.temp").innerText = info.week[i].temperature;
+    }
+}
+
+export function spinner(isOn) {
+    if (isOn) {
+        document.querySelector("dialog").showModal();
+    } else {
+        document.querySelector("dialog").close();
     }
 }
