@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
               ? data.address.country
               : data.address.region;
 
+        console.log(city, state);
+        
         loadInfo(`${city}, ${state}`);
     });
 
